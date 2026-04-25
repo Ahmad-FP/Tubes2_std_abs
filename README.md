@@ -33,7 +33,7 @@ Kedua algoritma menghasilkan elemen yang sama untuk CSS Selector yang sama, namu
 Menggunakan Docker Compose (cara yang direkomendasikan):
 
 ```bash
-docker compose up --build -d
+docker compose up --build 
 ```
 
 ### Penggunaan
