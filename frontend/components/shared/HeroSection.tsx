@@ -7,17 +7,25 @@ interface HeroSectionProps {
 export default function HeroSection({ onStart }: HeroSectionProps) {
   return (
     <section className="relative min-h-screen flex flex-col items-center 
-                        justify-center overflow-hidden">
-      {/* Background grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.03)_1px,transparent_1px)] bg-[size:64px_64px]" />
+                        justify-center overflow-hidden"
+      style={{ backgroundColor: "var(--bg-primary)" }}>
 
-      {/* Glow effects */}
+      {/* Background grid */}
+      <div className="absolute inset-0"
+        style={{
+          backgroundImage: "linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)",
+          backgroundSize: "64px 64px"
+        }}
+      />
+
+      {/* Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
                       w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px] 
                       pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full 
                         border border-blue-500/30 bg-blue-500/10 mb-8">
@@ -29,7 +37,7 @@ export default function HeroSection({ onStart }: HeroSectionProps) {
 
         {/* Title */}
         <h1 className="text-6xl md:text-7xl font-bold mb-6 leading-tight">
-          <span className="text-white">DOM</span>
+          <span style={{ color: "var(--text-primary)" }}>DOM</span>
           <br />
           <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-600 
                            bg-clip-text text-transparent">
@@ -38,7 +46,8 @@ export default function HeroSection({ onStart }: HeroSectionProps) {
         </h1>
 
         {/* Subtitle */}
-        <p className="text-gray-400 text-lg md:text-xl mb-4 max-w-2xl mx-auto">
+        <p className="text-lg md:text-xl mb-4 max-w-2xl mx-auto"
+          style={{ color: "var(--text-secondary)" }}>
           Telusuri struktur pohon HTML menggunakan algoritma
         </p>
 
@@ -48,12 +57,12 @@ export default function HeroSection({ onStart }: HeroSectionProps) {
                            border-blue-500/40 text-blue-400 text-sm font-mono font-bold">
             BFS
           </span>
-          <span className="text-gray-600">&</span>
+          <span style={{ color: "var(--text-muted)" }}>&</span>
           <span className="px-4 py-1.5 rounded-full bg-cyan-600/20 border 
                            border-cyan-500/40 text-cyan-400 text-sm font-mono font-bold">
             DFS
           </span>
-          <span className="text-gray-600">with</span>
+          <span style={{ color: "var(--text-muted)" }}>with</span>
           <span className="px-4 py-1.5 rounded-full bg-purple-600/20 border 
                            border-purple-500/40 text-purple-400 text-sm font-mono font-bold">
             CSS Selector
@@ -80,14 +89,17 @@ export default function HeroSection({ onStart }: HeroSectionProps) {
         </button>
 
         {/* Scroll hint */}
-        <p className="text-gray-600 text-sm mt-6">
+        <p className="text-sm mt-6" style={{ color: "var(--text-muted)" }}>
           atau scroll ke bawah untuk memulai
         </p>
       </div>
 
       {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 
-                      bg-gradient-to-t from-[#0a0a0f] to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-32"
+        style={{
+          background: "linear-gradient(to top, var(--bg-primary), transparent)"
+        }}
+      />
     </section>
   );
 }

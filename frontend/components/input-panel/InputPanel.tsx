@@ -85,20 +85,19 @@ export default function InputPanel({ onScraped, onTraversed }: InputPanelProps) 
   return (
   <div className="flex flex-col gap-5">
 
-    {/* Section 1: Input Source */}
     <div className="flex flex-col gap-3">
-      <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+      <p className="text-xs font-semibold uppercase tracking-widest"
+        style={{ color: "var(--text-muted)" }}>
         01 — Sumber HTML
       </p>
       <UrlInput />
     </div>
 
-    {/* Divider */}
-    <div className="border-t border-gray-700/50" />
+    <div style={{ borderTop: "1px solid var(--border)" }} />
 
-    {/* Section 2: Algorithm & Limit side by side */}
     <div className="flex flex-col gap-3">
-      <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+      <p className="text-xs font-semibold uppercase tracking-widest"
+        style={{ color: "var(--text-muted)" }}>
         02 — Konfigurasi Traversal
       </p>
       <div className="grid grid-cols-2 gap-4">
@@ -107,24 +106,20 @@ export default function InputPanel({ onScraped, onTraversed }: InputPanelProps) 
       </div>
     </div>
 
-    {/* Divider */}
-    <div className="border-t border-gray-700/50" />
+    <div style={{ borderTop: "1px solid var(--border)" }} />
 
-    {/* Section 3: CSS Selector */}
     <div className="flex flex-col gap-3">
-      <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+      <p className="text-xs font-semibold uppercase tracking-widest"
+        style={{ color: "var(--text-muted)" }}>
         03 — CSS Selector
       </p>
       <SelectorInput />
     </div>
 
-    {/* Divider */}
-    <div className="border-t border-gray-700/50" />
+    <div style={{ borderTop: "1px solid var(--border)" }} />
 
-    {/* Error */}
     <ErrorMessage />
 
-    {/* Buttons */}
     <div className="grid grid-cols-2 gap-3">
       <button
         onClick={handleScrape}

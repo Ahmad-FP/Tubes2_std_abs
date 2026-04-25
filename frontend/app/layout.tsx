@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import ThemeToggle from "@/components/shared/ThemeToggle";
 
 export const metadata: Metadata = {
   title: "DOM Tree Traversal",
@@ -12,8 +13,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-[#0a0a0f] text-white min-h-screen">
+    <html lang="en" className="dark">
+      <body style={{ backgroundColor: "var(--bg-primary)", minHeight: "100vh" }}>
+        <div className="fixed top-4 right-4 z-50">
+          <ThemeToggle />
+        </div>
         {children}
       </body>
     </html>

@@ -1,72 +1,63 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import HeroSection from "@/components/shared/HeroSection";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import InputPanel from "@/components/input-panel/InputPanel";
 import TreeVisualizer from "@/components/tree-visualizer/TreeVisualizer";
 import ResultPanel from "@/components/result-panel/ResultPanel";
-import { useAppStore } from "@/store/useAppStore";
 
 export default function Home() {
   const [showInput, setShowInput] = useState(false);
   const [showTree, setShowTree] = useState(false);
   const [showResult, setShowResult] = useState(false);
-  const { domTree, matches } = useAppStore();
-
-  const handleStart = () => {
-    setShowInput(true);
-  };
-
-  // Dipanggil dari InputPanel setelah scrape berhasil
-  const handleScraped = () => {
-    setShowTree(true);
-  };
-
-  // Dipanggil dari InputPanel setelah traversal berhasil
-  const handleTraversed = () => {
-    setShowResult(true);
-  };
 
   return (
-    <main className="min-h-screen bg-[#0a0a0f]">
-      {/* Hero */}
-      <HeroSection onStart={handleStart} />
+    <main className="min-h-screen" style={{ backgroundColor: "var(--bg-primary)" }}>
+      <HeroSection onStart={() => setShowInput(true)} />
 
       {/* Input Section */}
       <SectionWrapper id="input-section" visible={showInput}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-white mb-2">
+            <h2 className="text-3xl font-bold mb-2"
+              style={{ color: "var(--text-primary)" }}>
               Konfigurasi Penelusuran
             </h2>
-            <p className="text-gray-400">
+            <p style={{ color: "var(--text-secondary)" }}>
               Masukkan URL atau HTML, pilih algoritma, dan CSS selector
             </p>
           </div>
-          <div className="rounded-2xl border border-gray-800 bg-gray-900/50 
-                          backdrop-blur-sm p-6">
+          <div className="rounded-2xl p-6"
+            style={{
+              border: "1px solid var(--border)",
+              backgroundColor: "var(--bg-secondary)",
+            }}>
             <InputPanel
-              onScraped={handleScraped}
-              onTraversed={handleTraversed}
+              onScraped={() => setShowTree(true)}
+              onTraversed={() => setShowResult(true)}
             />
           </div>
         </div>
       </SectionWrapper>
 
-      {/* Tree Visualizer Section */}
+      {/* Tree Section */}
       <SectionWrapper id="tree-section" visible={showTree}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-white mb-2">
+            <h2 className="text-3xl font-bold mb-2"
+              style={{ color: "var(--text-primary)" }}>
               Visualisasi Pohon DOM
             </h2>
-            <p className="text-gray-400">
+            <p style={{ color: "var(--text-secondary)" }}>
               Struktur hierarki elemen HTML
             </p>
           </div>
-          <div className="rounded-2xl border border-gray-800 bg-gray-900/50 
-                          backdrop-blur-sm p-6 h-[600px]">
+          <div className="rounded-2xl p-6 h-[600px]"
+            style={{
+              border: "1px solid var(--border)",
+              backgroundColor: "var(--bg-secondary)",
+            }}>
             <TreeVisualizer />
           </div>
         </div>
@@ -76,15 +67,19 @@ export default function Home() {
       <SectionWrapper id="result-section" visible={showResult}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-white mb-2">
+            <h2 className="text-3xl font-bold mb-2"
+              style={{ color: "var(--text-primary)" }}>
               Hasil Penelusuran
             </h2>
-            <p className="text-gray-400">
+            <p style={{ color: "var(--text-secondary)" }}>
               Elemen yang ditemukan berdasarkan CSS selector
             </p>
           </div>
-          <div className="rounded-2xl border border-gray-800 bg-gray-900/50 
-                          backdrop-blur-sm p-6">
+          <div className="rounded-2xl p-6"
+            style={{
+              border: "1px solid var(--border)",
+              backgroundColor: "var(--bg-secondary)",
+            }}>
             <ResultPanel />
           </div>
         </div>
