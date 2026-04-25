@@ -88,7 +88,7 @@ export default function InputPanel({ onScraped, onTraversed }: InputPanelProps) 
     {/* Section 1: Input Source */}
     <div className="flex flex-col gap-3">
       <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
-        01 — Sumber HTML
+        01 - Sumber HTML
       </p>
       <UrlInput />
     </div>
@@ -99,7 +99,7 @@ export default function InputPanel({ onScraped, onTraversed }: InputPanelProps) 
     {/* Section 2: Algorithm & Limit side by side */}
     <div className="flex flex-col gap-3">
       <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
-        02 — Konfigurasi Traversal
+        02 - Konfigurasi Traversal
       </p>
       <div className="grid grid-cols-2 gap-4">
         <AlgorithmSelector />
@@ -113,7 +113,7 @@ export default function InputPanel({ onScraped, onTraversed }: InputPanelProps) 
     {/* Section 3: CSS Selector */}
     <div className="flex flex-col gap-3">
       <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
-        03 — CSS Selector
+        03 - CSS Selector
       </p>
       <SelectorInput />
     </div>
@@ -134,7 +134,7 @@ export default function InputPanel({ onScraped, onTraversed }: InputPanelProps) 
                    text-white font-semibold text-sm transition-all
                    hover:shadow-[0_0_20px_rgba(59,130,246,0.4)]"
       >
-        {isScraping ? "Scraping..." : "🔍 Scrape & Parse"}
+        {isScraping ? "Scraping..." : "Scrape & Parse"}
       </button>
       <button
         onClick={handleTraverse}
@@ -144,7 +144,7 @@ export default function InputPanel({ onScraped, onTraversed }: InputPanelProps) 
                    text-white font-semibold text-sm transition-all
                    hover:shadow-[0_0_20px_rgba(16,185,129,0.4)]"
       >
-        {isLoading ? "Traversing..." : "▶ Run Traversal"}
+        {isLoading ? "Traversing..." : "Run Traversal"}
       </button>
     </div>
 
