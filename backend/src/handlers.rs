@@ -170,13 +170,19 @@ pub struct TraversalLogEntry {
     pub matched: bool,
 }
 
-fn rebuild_arena(fe: &FrontendDomNode) -> DomTree {
+fn rebuild_arena(fe: &FrontendDomNode) -> (DomTree, Vec<String>) {
     let mut tree = DomTree::new();
-    rebuild_node(&mut tree, fe, None);
-    tree
+    let mut orig_ids: Vec<String> = Vec::new();
+    rebuild_node(&mut tree, &mut orig_ids, fe, None);
+    (tree, orig_ids)
 }
 
-fn rebuild_node(tree: &mut DomTree, fe: &FrontendDomNode, parent: Option<NodeId>) -> NodeId {
+fn rebuild_node(
+    tree: &mut DomTree,
+    orig_ids: &mut Vec<String>,
+    fe: &FrontendDomNode,
+    parent: Option<NodeId>,
+) -> NodeId {
     let kind = NodeKind::Element {
         tag: fe.tag.clone(),
         attrs: fe.attributes.clone(),
@@ -192,12 +198,17 @@ fn rebuild_node(tree: &mut DomTree, fe: &FrontendDomNode, parent: Option<NodeId>
     };
 
     let nid = tree.add_node(dom_node);
+    if orig_ids.len() <= nid {
+        orig_ids.resize(nid + 1, String::new());
+    }
+    orig_ids[nid] = fe.id.clone();
+
     if parent.is_none() {
         tree.root = nid;
     }
 
     for child in &fe.children {
-        let child_id = rebuild_node(tree, child, Some(nid));
+        let child_id = rebuild_node(tree, orig_ids, child, Some(nid));
         tree.nodes[nid].children.push(child_id);
     }
 
@@ -216,7 +227,7 @@ pub async fn api_traverse(req: web::Json<TraverseRequest>) -> impl Responder {
     };
 
 
-    let arena_tree = rebuild_arena(&fe_tree);
+    let (arena_tree, orig_ids) = rebuild_arena(&fe_tree);
 
 
     let sel = parse_selector(&req.selector);
@@ -243,7 +254,7 @@ pub async fn api_traverse(req: web::Json<TraverseRequest>) -> impl Responder {
     let highlighted_paths: Vec<String> = result
         .matches
         .iter()
-        .map(|&nid| format!("node-{}", nid))
+        .map(|&nid| orig_ids[nid].clone())
         .collect();
 
 
@@ -260,7 +271,7 @@ pub async fn api_traverse(req: web::Json<TraverseRequest>) -> impl Responder {
             let path = build_path(&arena_tree, s.node_id);
             TraversalLogEntry {
                 step: s.step,
-                node_id: format!("node-{}", s.node_id),
+                node_id: orig_ids[s.node_id].clone(),
                 node_tag,
                 path,
                 matched: s.action == "match",
