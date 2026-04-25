@@ -1,23 +1,39 @@
 @import "tailwindcss";
 
+/* Rosé Pine Dawn (light mode) */
 :root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f8f8;
-  --text-primary: #0a0a0a;
-  --text-secondary: #6b6b6b;
-  --text-muted: #a0a0a0;
-  --accent: #2563eb;
-  --border: rgba(0, 0, 0, 0.08);
+  --bg-primary: #faf4ed;
+  --bg-secondary: #fffaf3;
+  --bg-card: #f2e9e1;
+  --text-primary: #575279;
+  --text-secondary: #797593;
+  --text-muted: #9893a5;
+  --accent: #d7827a;
+  --accent-alt: #286983;
+  --border: rgba(87, 82, 121, 0.12);
+  --rose: #d7827a;
+  --pine: #286983;
+  --foam: #56949f;
+  --gold: #ea9d34;
+  --iris: #907aa9;
 }
 
+/* Catppuccin Mocha (dark mode) */
 .dark {
-  --bg-primary: #080808;
-  --bg-secondary: #111111;
-  --text-primary: #f0f0f0;
-  --text-secondary: #888888;
-  --text-muted: #555555;
-  --accent: #3b82f6;
-  --border: rgba(255, 255, 255, 0.06);
+  --bg-primary: #1e1e2e;
+  --bg-secondary: #181825;
+  --bg-card: #313244;
+  --text-primary: #cdd6f4;
+  --text-secondary: #bac2de;
+  --text-muted: #6c7086;
+  --accent: #cba6f7;
+  --accent-alt: #89b4fa;
+  --border: rgba(205, 214, 244, 0.08);
+  --rose: #f38ba8;
+  --pine: #89b4fa;
+  --foam: #94e2d5;
+  --gold: #f9e2af;
+  --iris: #cba6f7;
 }
 
 html {
@@ -33,11 +49,12 @@ body {
   color: var(--text-primary) !important;
   transition: background-color 0.4s ease, color 0.4s ease;
   min-height: 100vh;
+  font-family: 'Inter', Arial, sans-serif;
 }
 
 ::selection {
   background: var(--accent);
-  color: white;
+  color: var(--bg-primary);
 }
 
 ::-webkit-scrollbar { width: 4px; }

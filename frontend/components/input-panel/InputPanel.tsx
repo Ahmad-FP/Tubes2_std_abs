@@ -3,8 +3,8 @@
 import { useAppStore } from "@/store/useAppStore";
 import UrlInput from "./UrlInput";
 import AlgorithmSelector from "./AlgorithmSelector";
-import SelectorInput from "./SelectorInput";
 import LimitInput from "./LimitInput";
+import SelectorInput from "./SelectorInput";
 import { scrapeHtml } from "@/lib/api/scrape";
 import { traverseTree } from "@/lib/api/traverse";
 
@@ -83,63 +83,50 @@ export default function InputPanel({ onScraped, onTraversed }: InputPanelProps) 
   };
 
   return (
-  <div className="flex flex-col gap-5">
+  <div className="flex flex-col gap-12">
 
-    <div className="flex flex-col gap-3">
-      <p className="text-xs font-semibold uppercase tracking-widest"
-        style={{ color: "var(--text-muted)" }}>
-        01 — Sumber HTML
-      </p>
+    {/* Cards Row */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       <UrlInput />
-    </div>
-
-    <div style={{ borderTop: "1px solid var(--border)" }} />
-
-    <div className="flex flex-col gap-3">
-      <p className="text-xs font-semibold uppercase tracking-widest"
-        style={{ color: "var(--text-muted)" }}>
-        02 — Konfigurasi Traversal
-      </p>
-      <div className="grid grid-cols-2 gap-4">
-        <AlgorithmSelector />
-        <LimitInput />
-      </div>
-    </div>
-
-    <div style={{ borderTop: "1px solid var(--border)" }} />
-
-    <div className="flex flex-col gap-3">
-      <p className="text-xs font-semibold uppercase tracking-widest"
-        style={{ color: "var(--text-muted)" }}>
-        03 — CSS Selector
-      </p>
+      <AlgorithmSelector />
       <SelectorInput />
     </div>
 
-    <div style={{ borderTop: "1px solid var(--border)" }} />
-
+    {/* Error */}
     <ErrorMessage />
 
-    <div className="grid grid-cols-2 gap-3">
+    {/* Buttons */}
+    <div className="flex gap-4 justify-center">
       <button
         onClick={handleScrape}
         disabled={isScraping}
-        className="py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500
-                   disabled:opacity-50 disabled:cursor-not-allowed
-                   text-white font-semibold text-sm transition-all
+        className="group flex items-center gap-3 px-8 py-3 rounded-xl 
+                   bg-blue-600 hover:bg-blue-500 text-white font-semibold 
+                   text-sm transition-all disabled:opacity-40
                    hover:shadow-[0_0_20px_rgba(59,130,246,0.4)]"
       >
-        {isScraping ? "Scraping..." : "🔍 Scrape & Parse"}
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        {isScraping ? "Scraping..." : "Scrape & Parse HTML"}
       </button>
+
       <button
         onClick={handleTraverse}
         disabled={isLoading || !domTree}
-        className="py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500
-                   disabled:opacity-50 disabled:cursor-not-allowed
-                   text-white font-semibold text-sm transition-all
+        className="group flex items-center gap-3 px-8 py-3 rounded-xl
+                   bg-emerald-600 hover:bg-emerald-500 text-white font-semibold
+                   text-sm transition-all disabled:opacity-40
                    hover:shadow-[0_0_20px_rgba(16,185,129,0.4)]"
       >
-        {isLoading ? "Traversing..." : "▶ Run Traversal"}
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        {isLoading ? "Traversing..." : "Run Traversal"}
       </button>
     </div>
 
