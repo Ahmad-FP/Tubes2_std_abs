@@ -30,7 +30,7 @@ export default function TraversalLog() {
           <span className="text-blue-400">&lt;{step.node_tag}&gt;</span>
           <span className="text-gray-500 truncate flex-1">{step.path}</span>
           {step.matched && (
-            <span className="text-emerald-400 shrink-0">✓ match</span>
+            <span className="text-emerald-400 shrink-0">match</span>
           )}
         </div>
       ))}

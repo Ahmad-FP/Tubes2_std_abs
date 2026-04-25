@@ -30,7 +30,6 @@ export default function TreeVisualizer() {
   if (!domTree) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center gap-2">
-        <p className="text-4xl">🌳</p>
         <p className="text-gray-400 text-sm">
           Masukkan URL atau HTML untuk memulai
         </p>
