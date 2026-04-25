@@ -23,8 +23,15 @@ pub struct SearchResult {
     pub time_ms: f64,
 }
 
+pub enum Combinator {
+    Descendant,
+    Child,
+    AdjSibling,
+    GenSibling,
+}
+
 pub struct SelPart {
-    pub is_child: bool,
+    pub combinator: Combinator,
     pub tag: String,
     pub id: String,
     pub classes: Vec<String>,
@@ -89,20 +96,52 @@ fn try_match(tree: &DomTree, nid: NodeId, parts: &[SelPart], i: usize) -> bool {
         return true;
     }
 
-    let parent = tree.nodes[nid].parent;
-    if parts[i].is_child {
-        match parent {
+    match &parts[i].combinator {
+        Combinator::Child => match tree.nodes[nid].parent {
             Some(p) => try_match(tree, p, parts, i - 1),
             None => false,
-        }
-    } else {
-        let mut cur = parent;
-        while let Some(p) = cur {
-            if try_match(tree, p, parts, i - 1) {
-                return true;
+        },
+        Combinator::Descendant => {
+            let mut cur = tree.nodes[nid].parent;
+            while let Some(p) = cur {
+                if try_match(tree, p, parts, i - 1) {
+                    return true;
+                }
+                cur = tree.nodes[p].parent;
             }
-            cur = tree.nodes[p].parent;
+            false
         }
-        false
+        Combinator::AdjSibling => {
+            let parent = match tree.nodes[nid].parent {
+                Some(p) => p,
+                None => return false,
+            };
+            let siblings = &tree.nodes[parent].children;
+            let my_idx = match siblings.iter().position(|&x| x == nid) {
+                Some(idx) => idx,
+                None => return false,
+            };
+            if my_idx == 0 {
+                return false;
+            }
+            try_match(tree, siblings[my_idx - 1], parts, i - 1)
+        }
+        Combinator::GenSibling => {
+            let parent = match tree.nodes[nid].parent {
+                Some(p) => p,
+                None => return false,
+            };
+            let siblings = &tree.nodes[parent].children;
+            let my_idx = match siblings.iter().position(|&x| x == nid) {
+                Some(idx) => idx,
+                None => return false,
+            };
+            for j in 0..my_idx {
+                if try_match(tree, siblings[j], parts, i - 1) {
+                    return true;
+                }
+            }
+            false
+        }
     }
 }

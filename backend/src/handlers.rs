@@ -3,7 +3,7 @@ use crate::parser::parse_html;
 use crate::scraper::fetch_html;
 use crate::traversal::bfs;
 use crate::traversal::dfs;
-use crate::traversal::{SelPart, Selector};
+use crate::traversal::{Combinator, SelPart, Selector};
 use actix_web::{post, web, HttpResponse, Responder};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
@@ -291,24 +291,20 @@ pub async fn api_traverse(req: web::Json<TraverseRequest>) -> impl Responder {
 fn parse_selector(selector: &str) -> Selector {
     let mut parts: Vec<SelPart> = vec![];
     let raw_parts: Vec<&str> = selector.split_whitespace().collect();
-    let mut i = 0;
+    let mut next_comb = Combinator::Descendant;
 
-    while i < raw_parts.len() {
-        let token = raw_parts[i];
-
-        if token == ">" {
-
-            i += 1;
-            if i < raw_parts.len() {
-                let mut p = parse_single(raw_parts[i]);
-                p.is_child = true;
+    for token in raw_parts {
+        match token {
+            ">" => next_comb = Combinator::Child,
+            "+" => next_comb = Combinator::AdjSibling,
+            "~" => next_comb = Combinator::GenSibling,
+            _ => {
+                let mut p = parse_single(token);
+                p.combinator = next_comb;
                 parts.push(p);
+                next_comb = Combinator::Descendant;
             }
-        } else {
-            let p = parse_single(token);
-            parts.push(p);
         }
-        i += 1;
     }
 
     Selector { parts }
@@ -323,7 +319,7 @@ fn parse_single(token: &str) -> SelPart {
 
     if token == "*" {
         return SelPart {
-            is_child: false,
+            combinator: Combinator::Descendant,
             tag,
             id,
             classes,
@@ -372,7 +368,7 @@ fn parse_single(token: &str) -> SelPart {
     }
 
     SelPart {
-        is_child: false,
+        combinator: Combinator::Descendant,
         tag,
         id,
         classes,
