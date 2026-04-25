@@ -14,33 +14,67 @@ function DomNodeComponent({ data }: { data: DomNodeData }) {
 
   return (
     <div
-      className={`px-3 py-2 rounded-lg border text-xs font-mono min-w-[80px] text-center
-        transition-all duration-300
-        ${isHighlighted
-          ? "border-blue-500 bg-blue-900/40 text-blue-300 shadow-lg shadow-blue-500/20"
-          : "border-gray-600 bg-gray-800 text-gray-300"
-        }`}
+      style={{
+        padding: "4px 8px",
+        borderRadius: "6px",
+        border: isHighlighted
+          ? "1px solid var(--iris, #cba6f7)"
+          : "1px solid var(--border, #45475a)",
+        backgroundColor: isHighlighted
+          ? "rgba(203,166,247,0.15)"
+          : "var(--bg-card, #313244)",
+        minWidth: "60px",
+        maxWidth: "100px",
+        textAlign: "center",
+        fontSize: "9px",
+        fontFamily: "monospace",
+      }}
     >
-      <Handle type="target" position={Position.Top} className="!bg-gray-500" />
+      <Handle type="target" position={Position.Top}
+        style={{ background: "#6c7086", width: 4, height: 4 }} />
 
-      {/* Tag name */}
-      <span className={`font-bold ${isHighlighted ? "text-blue-400" : "text-emerald-400"}`}>
+      {/* Tag */}
+      <div style={{
+        fontWeight: "bold",
+        color: isHighlighted
+          ? "var(--iris, #cba6f7)"
+          : "var(--foam, #94e2d5)",
+        fontSize: "9px",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+      }}>
         &lt;{tag}&gt;
-      </span>
+      </div>
 
-      {/* ID attribute */}
+      {/* ID */}
       {id_attr && (
-        <div className="text-yellow-400 text-[10px]">#{id_attr}</div>
-      )}
-
-      {/* Classes */}
-      {classes.length > 0 && (
-        <div className="text-purple-400 text-[10px]">
-          .{classes.join(" .")}
+        <div style={{
+          color: "var(--gold, #f9e2af)",
+          fontSize: "8px",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}>
+          #{id_attr}
         </div>
       )}
 
-      <Handle type="source" position={Position.Bottom} className="!bg-gray-500" />
+      {/* Classes - hanya tampilkan 1 class pertama */}
+      {classes.length > 0 && (
+        <div style={{
+          color: "var(--rose, #f38ba8)",
+          fontSize: "8px",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}>
+          .{classes[0]}{classes.length > 1 ? `+${classes.length - 1}` : ""}
+        </div>
+      )}
+
+      <Handle type="source" position={Position.Bottom}
+        style={{ background: "#6c7086", width: 4, height: 4 }} />
     </div>
   );
 }
