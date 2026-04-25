@@ -243,7 +243,7 @@ pub async fn api_traverse(req: web::Json<TraverseRequest>) -> impl Responder {
     let highlighted_paths: Vec<String> = result
         .matches
         .iter()
-        .map(|&nid| build_path(&arena_tree, nid))
+        .map(|&nid| format!("node-{}", nid))
         .collect();
 
 

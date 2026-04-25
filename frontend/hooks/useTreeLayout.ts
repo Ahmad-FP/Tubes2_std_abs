@@ -39,7 +39,7 @@ export function useTreeLayout(
   }
 
   function buildNodes(node: DomNode) {
-    const isHighlighted = highlightedPaths.includes(node.path); // path tetap untuk highlight
+    const isHighlighted = highlightedPaths.includes(node.id);
     const x = xPositions.get(node.id) ?? 0;                    // ← id
     const y = node.depth * (NODE_HEIGHT + V_GAP);
 
